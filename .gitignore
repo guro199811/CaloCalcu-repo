@@ -1,0 +1,5 @@
+# Ignore SSH keys
+*.rsa
+*.pub
+ssh_keys
+venv
