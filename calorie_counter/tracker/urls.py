@@ -1,8 +1,8 @@
-# calorie_counter/urls.py
-from django.contrib import admin
 from django.urls import path, include
+from . import views
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('tracker.urls')),
+    path('', views.home, name='Calocalco-Home'),
+    path('about/', views.about, name='Calocalco-About')
 ]
