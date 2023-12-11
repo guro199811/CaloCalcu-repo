@@ -1,0 +1,15 @@
+.centered-container {
+    text-align: center;
+    margin-top: 50px; /* Adjust as needed */
+  }
+
+  .section-title {
+    font-size: 2em;
+    color: #333; /* Adjust the color as needed */
+  }
+
+  .subtitle {
+    font-size: 1.5em;
+    color: #555; /* Adjust the color as needed */
+    margin-top: 10px; /* Adjust as needed */
+  }
