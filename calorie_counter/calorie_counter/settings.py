@@ -120,11 +120,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # Add the paths to the 'static/css' and 'static/js' folders
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static/css'),
-    os.path.join(BASE_DIR, 'static/js'),
-    os.path.join(BASE_DIR, 'static/images'),
-]
 
 
 # Default primary key field type
