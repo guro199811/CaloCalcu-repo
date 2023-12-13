@@ -4,11 +4,7 @@ from django.http import HttpResponse
 # Create your views here.
 
 def home(request):
-    name = 'gurami'
-    context= {
-    'name' : name
-    }
-    return render(request, 'tracker/home.html', context)
+    return render(request, 'tracker/home.html')
 
 def about(request):
     return render(request, 'tracker/about.html')

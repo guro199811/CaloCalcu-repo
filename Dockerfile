@@ -11,14 +11,11 @@ COPY requirements.txt /app/
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Set the working directory to /app/calorie_counter
-WORKDIR /app/calorie_counter
+# Set the working directory to /app/Backend
+WORKDIR /app/Backend
 
-# Copy the contents of the calorie_counter directory into /app/
+# Copy the contents of the Backend directory into /app/
 COPY . /app/
-
-# Show the contents of the /app directory
-RUN ls -al /app
 
 # Install netcat-openbsd
 RUN apt-get update && apt-get install -y netcat-openbsd
