@@ -9,9 +9,21 @@ services:
       - .:/app
     ports:
       - "8000:8000"
-    container_name: App
+    container_name: Backend
     depends_on:
       - db
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    volumes:
+      - ./frontend:/app/frontend
+    ports:
+      - "5000:5000"
+    container_name: Frontend
+    depends_on:
+      - backend
 
   db:
     image: postgres:latest

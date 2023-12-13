@@ -12,7 +12,7 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Set the working directory to /app/Backend
-WORKDIR /app/Backend
+WORKDIR /app/backend
 
 # Copy the contents of the Backend directory into /app/
 COPY . /app/
