@@ -3,6 +3,7 @@
 
 # Wait for PostgreSQL to be ready
 
+
 until nc -z -v -w30 db 5432
 do
   echo "Waiting for PostgreSQL to be ready..."
