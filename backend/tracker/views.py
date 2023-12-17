@@ -8,3 +8,9 @@ def home(request):
 
 def about(request):
     return render(request, 'tracker/about.html')
+
+def login_page(request):
+    return render(request, 'tracker/auth/login.html')
+
+def register_page(request):
+    return render(request, 'tracker/auth/register.html')
