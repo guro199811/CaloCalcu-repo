@@ -12,30 +12,107 @@
     {% endblock title %}
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'tracker/main.css' %}">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     {% block style %}
     {% endblock style%}
 
-    <script src="{% static 'tracker/headscript.js' %}"></script>
+    <script src="{% static 'headscript.js' %}"></script>
     {% block headscript %}
     {% endblock headscript %}
 </head>
 <body>
-    <div class="navbar">
-        <a href="{% url 'calo-login' %}">Log In</a>
-        <a href="{% url 'calo-home' %}">Logo</a>
-        <a href="{% url 'calo-register' %}">Register</a>
+    <header class="navbar">
+        <div class="navbar-logo">
+            <a href="{% url 'calo-home' %}">
+                <img src="{% static 'logo-nobg.png' %}" alt="Logo">
+            </a>
+        </div>
+        <nav class="navbar-items">
+            <a href="{% url 'calo-home' %}">Home</a>
+            <a href="{% url 'calo-about' %}">About Us</a>
+            <a href="#">Contact</a>
+            <button class="loginBtn">Login</button>
+        </nav>
+    </header>
+        
+    <div class="auth-container">
+        <div class="wrapper">
+            <span class="icon-close"><ion-icon name="close-outline"></ion-icon></span>
+            
+            <div class="login-box">
+                <form action="#">
+                    <h1>Login</h1>
+                    <div class="input-box">
+                        <input type="text" placeholder="Email" required>
+                        <i class='bx bx-envelope' ></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" placeholder="******" required>
+                        <i class='bx bx-lock-alt' ></i>
+                    </div>
+                    <div class="additional-section">
+                        <label for=""><input type="checkbox" id="showPassword">Reveal Password</label>
+                        <a href="#">Forgot password?</a>
+                    </div>
+                    <button class="submitbtn" type="submit">Login</button>
+        
+                    <div class="log-reg-link">
+                        <p>Don't have an account? 
+                            <a href="#" class="register-link">Register</a></p>
+                    </div>
+                </form>
+            </div>
+
+            <div class="register-box">
+                <form action="#">
+                    <h1>Registration</h1>
+                    <div class="input-box">
+                        <input type="text" placeholder="Username" required>
+                        <i class='bx bx-user' ></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" placeholder="Email" required>
+                        <i class='bx bx-envelope' ></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" placeholder="Password" required>
+                        <i class='bx bx-lock-alt' ></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" placeholder="Repeat Password" 
+                        id="repeatpassword" required>
+                        <i class='bx bx-lock-alt' ></i>
+                    </div>
+                    <div class="additional-section">
+                        <label><input type="checkbox" id="revealPassword">Reveal Password</label>
+
+                    </div>
+                    <button class="submitbtn" type="submit">Register</button>
+        
+                    <div class="log-reg-link">
+                        <p>Already Have an Account? 
+                            <a href="#" class="login-link">Login</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-      
+
     <div class="content">
     {% block content %}
 
     {% endblock content %}
     </div>
-    <script src="{% static 'tracker/main.js' %}"></script>
+
+    <div class="footer">
+    </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="{% static 'main.js' %}"></script>
     {% block script %}
     {% endblock script %}
 </body>
