@@ -1,4 +1,6 @@
 /* Base.html CSS */
+/* Import Google Fonts */
+@import url("//fonts.googleapis.com/css2?family=Rye:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
 
 * {
   margin:0;
@@ -8,16 +10,26 @@
   font-weight: 700 !important;
 }
 
-body{
+body {
   background: url('main-bg.jpg') no-repeat;
   background-size: cover;
   background-position: center;
 }
 
+.test-title{
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  text-align:center;
+  font-family:'Rye', display;
+  font-size:30px;
+  color:#ffffff;
+}
 
 .navbar {
   padding: 15px;
-  z-index: 10000;
+  z-index: 8000;
+  height: 14vh;
 }
 
 .navbar .loginBtn{
@@ -72,9 +84,11 @@ body{
 
 .content {
   width: 100%;
-  height: auto;
+  height: 86vh;
   padding: 0px;
-}
+  position: relative;
+  z-index: 1;
+  }
 
 .section-title {
   font-size: 2em;
@@ -97,6 +111,12 @@ body{
   align-items: center;
   min-height: 85vh;
   margin:0;
+  z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .wrapper{
@@ -110,6 +130,8 @@ body{
   border-radius: 20px;
   padding: 30px 40px;
   overflow: hidden;
+  position: fixed;
+  z-index: 10000;
 }
 
 .wrapper h1{
@@ -228,10 +250,21 @@ body{
   transition: transform 0.5s ease, height 0.5s ease;
 }
 
+.auth-container{
+  transform: scale(0);
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.09s ease;
+}
+
 /*Hiding and showing Login box*/
 
 .wrapper.active-login{
-  transform: scale(1)
+  transform: scale(1);
+}
+
+.auth-container.active-login{
+  transform: scale(1);
+  opacity: 1;
 }
 
 /*Transition animations*/
@@ -271,4 +304,234 @@ body{
 }
 
 
+.auth-container.active-login {
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+  backdrop-filter: blur(5px);
+}
 
+
+/* Home Section Css / blockbox Css */
+
+/* Blockbox */
+.blockbox{
+  display:flex;
+  justify-content:center;
+  height:80%;
+  width:80%;
+  position:relative;
+  left:10%;
+  top:3%;
+  background-color:rgba(0,0,0,0.4);
+  border-top-left-radius:20px;
+  border-top-right-radius:20px;
+  border-bottom-left-radius:20px;
+  border-bottom-right-radius:20px;
+  backdrop-filter:blur(6px);
+ }
+
+ /* Food */
+.content .blockbox .food-selection{
+  background-color:rgba(0,0,0,0.7);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  width:37%;
+  height:80%;
+  position:relative;
+  top:10%;
+  margin-left:30px;
+  border-top-left-radius:20px;
+  border-top-right-radius:20px;
+  border-bottom-left-radius:20px;
+  border-bottom-right-radius:20px;
+ }
+ 
+
+ /* Bucket */
+.content .blockbox .outer-bucket{
+  background-color:rgba(0,0,0,0.7);
+  padding: 5px 5px 5px 5px;
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+  height:80%;
+  width:37%;
+  margin-left:30px;
+  margin-right:30px;
+  padding-top: 15px;
+  position:relative;
+  top:10%;
+  border-top-left-radius:20px;
+  border-top-right-radius:20px;
+  border-bottom-left-radius:20px;
+  border-bottom-right-radius:20px;
+ }
+
+ /* Scale */
+.content .blockbox .outer-scale{
+  background-color:rgba(0,0,0,0.7);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  width:28%;
+  height:80%;
+  position:relative;
+  top:10%;
+  margin-right:30px;
+  border-top-left-radius:20px;
+  border-top-right-radius:20px;
+  border-bottom-left-radius:20px;
+  border-bottom-right-radius:20px;
+ }
+ 
+ /* Results container additions */
+ #searchInput{
+  text-align: center;
+  width:86%;
+  height:7%;
+  border-top-left-radius:20px;
+  border-top-right-radius:20px;
+  border-bottom-left-radius:20px;
+  border-bottom-right-radius:20px;
+  padding-right:5px;
+  padding-left:5px;
+ }
+
+
+#resultsContainer{
+  background-color:#eaeaea;
+  width:85%;
+  height:75%;
+  margin-top:10px;
+  margin-bottom:10px;
+  border-top-left-radius:20px;
+  border-top-right-radius:20px;
+  border-bottom-left-radius:20px;
+  border-bottom-right-radius:20px;
+  padding-top: 5px;
+  padding-bottom: 3px;
+  overflow:scroll;
+ }
+
+
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  display: none;
+}
+
+::-webkit-scrollbar-track {
+  display: none;
+}
+
+.scroll-container {
+  display:none;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  display:none;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  display:none;
+}
+
+
+/* Bucket Container additions */
+
+#bucket{
+  justify-content:flex-start;
+  overflow: scroll;
+  padding-top:12px;
+  padding-bottom:12px;
+  box-sizing: content-box;
+}
+
+.bucket-title{
+  color:white;
+}
+
+.bucket-item{
+  color:white;
+}
+
+.list-item{
+  cursor: pointer;
+  color: black;
+  transition: color 0.3s;
+}
+
+.list-item:hover {
+  color:#008b0c
+}
+
+.selected-item{
+  color: rgb(5, 138, 0); /* Set the text color for better visibility */
+  font-weight: bold; /* Optionally make the text bold */
+}
+
+#addFood{
+  width:55%;
+  height: 50px;
+  display: none;
+  background: lightblue;
+  backdrop-filter: blur(20px);
+  outline:none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1em;
+  color:black;
+  font-weight: 500;
+  transition: 0.5s;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#addFood:hover{
+  background-color: aqua;
+  border-color: black;
+}
+
+
+/* Scale Container additions*/
+
+.scale{
+  justify-content:flex-start;
+  overflow: scroll;
+  box-sizing: content-box;
+}
+
+/* Table styles */
+#scaleTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#scaleTable th, #scaleTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#scaleTable th {
+  background-color: #f2f2f2;
+}
+
+/* Selected item row styles */
+#scaleTable tr:last-child {
+  background-color: #3498db;
+  color: white;
+  font-weight: bold;
+}
+
+/* Hover effect on rows */
+#scaleTable tr:not(:last-child):hover {
+  background-color: #f0f0f0;
+}

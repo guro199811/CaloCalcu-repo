@@ -1,4 +1,6 @@
 {% extends "tracker/base.html" %}
+{% load static %}
+
 
 {% block title %}
     <title>Calucalcu Home</title>
@@ -6,4 +8,29 @@
 
 
 {% block content %}
+<div class="blockbox">
+    <div class="food-selection">
+        <h1 class="test-title">Food Selection</h1>
+        <input type="text" id="searchInput" placeholder="Search for Consumables...">
+        <div id="resultsContainer"></div>
+    </div>
+    <div class="outer-bucket">
+        <h1 class="test-title">X-ray The food</h1>
+        <div id="bucket" class="bucket">
+        </div>
+        <button id="addFood">Add</button>
+    </div>
+    <div class="outer-scale">
+        <h1 class="test-title">Scales</h1>
+        <div class="scale">
+
+        </div>
+        <button id="showDetailed">Show Detailed Overview</button>
+    </div>
+</div>
+
 {% endblock content%}
+
+{% block script %}
+<script src="{% static 'usda_database.js' %}"></script>
+{% endblock script %}
