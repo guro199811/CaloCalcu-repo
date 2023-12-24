@@ -6,9 +6,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='calo-home'),
-    path('about/', views.about, name='calo-about'),
-    path('login/', views.login_page, name='calo-login'),
-    path('registration/', views.register_page, name='calo-register')
+    path('about/', views.about, name='calo-about')
 ]
 
 if settings.DEBUG:
