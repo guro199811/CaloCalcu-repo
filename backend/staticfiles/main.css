@@ -322,10 +322,7 @@ body {
   left:10%;
   top:3%;
   background-color:rgba(0,0,0,0.4);
-  border-top-left-radius:20px;
-  border-top-right-radius:20px;
-  border-bottom-left-radius:20px;
-  border-bottom-right-radius:20px;
+  border-radius: 20px;
   backdrop-filter:blur(6px);
  }
 
@@ -341,10 +338,7 @@ body {
   position:relative;
   top:10%;
   margin-left:30px;
-  border-top-left-radius:20px;
-  border-top-right-radius:20px;
-  border-bottom-left-radius:20px;
-  border-bottom-right-radius:20px;
+  border-radius: 20px;
  }
  
 
@@ -363,10 +357,7 @@ body {
   padding-top: 15px;
   position:relative;
   top:10%;
-  border-top-left-radius:20px;
-  border-top-right-radius:20px;
-  border-bottom-left-radius:20px;
-  border-bottom-right-radius:20px;
+  border-radius: 20px;
  }
 
  /* Scale */
@@ -381,10 +372,9 @@ body {
   position:relative;
   top:10%;
   margin-right:30px;
-  border-top-left-radius:20px;
-  border-top-right-radius:20px;
-  border-bottom-left-radius:20px;
-  border-bottom-right-radius:20px;
+  border-radius: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px
  }
  
  /* Results container additions */
@@ -392,10 +382,7 @@ body {
   text-align: center;
   width:86%;
   height:7%;
-  border-top-left-radius:20px;
-  border-top-right-radius:20px;
-  border-bottom-left-radius:20px;
-  border-bottom-right-radius:20px;
+  border-radius: 20px;
   padding-right:5px;
   padding-left:5px;
  }
@@ -407,10 +394,7 @@ body {
   height:75%;
   margin-top:10px;
   margin-bottom:10px;
-  border-top-left-radius:20px;
-  border-top-right-radius:20px;
-  border-bottom-left-radius:20px;
-  border-bottom-right-radius:20px;
+  border-radius: 20px;
   padding-top: 5px;
   padding-bottom: 3px;
   overflow:scroll;
@@ -483,7 +467,7 @@ body {
   background: rgba(0, 0, 0, 0.295);
   backdrop-filter: blur(20px);
   outline:none;
-  border-radius: 6px;
+  border-radius: 20px;
   cursor: pointer;
   font-size: 1.1em;
   color: white;
@@ -505,6 +489,10 @@ body {
 /* Scale Container additions*/
 
 .scale{
+  margin-top:15px;
+  margin-left:10px;
+  margin-right:10px;
+  border-radius:17px 17px 17px 17px;
   justify-content:flex-start;
   overflow: scroll;
   box-sizing: content-box;
@@ -516,19 +504,13 @@ body {
   border-style:solid;
   border-color:#3a3a3a;
   border-width:2px;
-  border-top-left-radius:5px;
-  border-top-right-radius:5px;
-  border-bottom-left-radius:5px;
-  border-bottom-right-radius:5px;
+  border-radius: 20px;
   border-top-width:2px;
   border-right-width:1px;
   border-bottom-width:1px;
   border-left-width:2px;
   border-left-color:#808080;
-  border-left-style:solid;
-  border-bottom-style:solid;
-  border-right-style:solid;
-  border-top-style:solid;
+  border-style: solid;
   padding: 5px;
   margin: 10px;
   display: none;
@@ -545,14 +527,9 @@ body {
 #scaleTable {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
   background-color: #f2f2f2;
   color: black;
   display: none;
-  border-top-left-radius:20px;
-  border-top-right-radius:20px;
-  border-bottom-left-radius:20px;
-  border-bottom-right-radius:20px;
   margin-bottom:5px;
   margin-left: 5px;
   margin-right: 5px;
@@ -564,6 +541,7 @@ body {
   text-align: left;
   color:black;
   background-color: #919191;
+  text-align: center;
 }
 
 #scaleTable th {
@@ -582,4 +560,9 @@ body {
 #scaleTable tr:not(:last-child):hover {
   color:black;
   background-color: #f2f2f2;
+}
+
+#calorieCounter{
+  color:white;
+  display:none;
 }

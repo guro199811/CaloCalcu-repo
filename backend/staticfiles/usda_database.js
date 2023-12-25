@@ -98,29 +98,6 @@ document.addEventListener('DOMContentLoaded', function () {
         </tr>
     `;
 
-    addFoodButton.addEventListener('click', function () {
-        const selectedFood = document.getElementById('bucket').innerHTML;
-
-        if (selectedFood.trim() !== '') {
-            // Extract relevant information from the selected food
-            const { description, servingSize, servingSizeUnit, foodNutrients } = extractFoodDetails(selectedFood);
-
-            // Create a new table row for the scale
-            const scaleTableRow = document.createElement('tr');
-            scaleTableRow.innerHTML = `
-                <td>${description}</td>
-                <td>${servingSize} ${servingSizeUnit}</td>
-                <td>${getEnergyValue(foodNutrients)} kcal</td>
-            `;
-            scaleTable.appendChild(scaleTableRow);
-            const showDetailed = document.getElementById('showDetailed');
-            showDetailed.style.display = 'block';
-            const showScale = document.getElementById('scaleTable');
-            showScale.style.display = 'block';
-
-        }
-    });
-
     function extractFoodDetails(selectedFood) {
         // Extract relevant information from the selected food
         const parser = new DOMParser();
@@ -165,6 +142,47 @@ document.addEventListener('DOMContentLoaded', function () {
         return energyNutrient ? energyNutrient.value : 0;
     }
 
+    let totalEnergy = 0;
+
+    // Function to update the calorie counter
+    function updateCalorieCounter() {
+        const calorieCounter = document.getElementById('calorieCounter');
+        calorieCounter.textContent = `Total Energy: ${totalEnergy} kcal`;
+    }
+
+    addFoodButton.addEventListener('click', function () {
+        const selectedFood = document.getElementById('bucket').innerHTML;
+
+        if (selectedFood.trim() !== '') {
+            // Extract relevant information from the selected food
+            const { description, servingSize, servingSizeUnit, foodNutrients } = extractFoodDetails(selectedFood);
+
+            // Create a new table row for the scale
+            const scaleTableRow = document.createElement('tr');
+            scaleTableRow.innerHTML = `
+            <td>${description}</td>
+            ${servingSize !== '' ? `<td>${servingSize} ${servingSizeUnit}</td>` : `<td>1</td>`}
+            <td>${getEnergyValue(foodNutrients)} kcal</td>
+            `;
+            scaleTable.appendChild(scaleTableRow);
+
+            // Update the total energy
+            totalEnergy += getEnergyValue(foodNutrients);
+
+            // Update the calorie counter
+            updateCalorieCounter();
+
+            const showDetailed = document.getElementById('showDetailed');
+            showDetailed.style.display = 'block';
+            const showScale = document.getElementById('scaleTable');
+            showScale.style.display = 'block';
+            calorieCounter.style.display = 'block';
+        }
+    });
+
     // Append the table to the scale div
     document.querySelector('.scale').appendChild(scaleTable);
+
+    updateCalorieCounter();
+    
 });
