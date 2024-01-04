@@ -573,11 +573,12 @@ body {
   z-index: 9999;
   width:100vw;
   height:100vh;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(1px);
   background-color: transparent;
   display: flex;
   top: 0px;
   transform: scale(0);
+  transition: backdrop-filter 0.3s;
 }
 
 .detailed{
@@ -593,7 +594,7 @@ body {
   width:60vw;
   margin-left: 20vw;
   margin-right: 20vw;
-  background-color:#0000004f;
+  background-color:#0000005e;
   color:white;
   transform: scale(0);
   overflow: scroll;
@@ -608,6 +609,7 @@ body {
 .detailedView.show{
   transform: scale(1);
   background-color: rgba(0, 0, 0, 0.288);
+  backdrop-filter: blur(5px);
 }
 
 #detailed .closeDetailed{

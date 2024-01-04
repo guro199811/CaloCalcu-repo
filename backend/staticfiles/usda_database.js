@@ -1,3 +1,5 @@
+const selectedFoods = [];
+
 document.addEventListener('DOMContentLoaded', function () {
     const apiKey = 'YQVtAg0Pkdm4GI6fMg5EH8e5pXuh9ByzHsR8llw0'; // Replace with your USDA API key
 
@@ -44,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
         resultsContainer.appendChild(ul);
     }
 
+    
     function selectItem(food) {
         // Extracting relevant information
         const { description, foodCategory, servingSize, servingSizeUnit, householdServingFullText, foodNutrients } = food;
@@ -65,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Updating "bucket" div
         bucket.innerHTML = selectedItemHTML;
         addFood.style.display = 'block';
+        selectedFoods.push({ description, foodNutrients });
     }
 
     // Debounce function to delay API requests while typing
@@ -185,4 +189,76 @@ document.addEventListener('DOMContentLoaded', function () {
 
     updateCalorieCounter();
     
+});
+
+
+
+
+//const registerLink = document.querySelector('.register-link')
+//loginLink.addEventListener('click', ()=> {
+//    wrapper.classList.remove('active');
+//});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const showDetailed = document.querySelector('#showDetailed');
+    const detailed = document.querySelector('#detailed');
+    const detailedView = document.querySelector('.detailedView');
+
+    showDetailed.addEventListener('click', () => {
+        // Clear existing content in detailed view
+        detailed.innerHTML = '';
+
+        // Add the close icon HTML
+        const closeIconHTML = '<button class="closeDetailed"><ion-icon name="close-outline"></ion-icon></button>';
+        detailed.innerHTML += closeIconHTML;
+
+        // Create an h1 element with the text and class
+        const header = document.createElement('h1');
+        header.textContent = 'Combined Nutrient Overview';
+        header.classList.add('test-title');
+        detailed.appendChild(header);
+
+        // Combine and display detailed overview for all selected foods
+        const combinedNutrients = combineNutrients(selectedFoods);
+        const detailedHTML = combinedNutrients.map(nutrient => `<p class="detailed-item">${nutrient.nutrientName}: ${nutrient.value} ${nutrient.unitName}</p>`).join('');
+
+        // Append the combined nutrient values to the existing content in the "detailed" div
+        detailed.innerHTML += detailedHTML;
+
+        // Show the detailed view
+        detailed.classList.add('show');
+        detailedView.classList.add('show');
+
+        // Select the close button after it has been added to the DOM
+        const closeDetailed = document.querySelector('.closeDetailed');
+        closeDetailed.addEventListener('click', () => {
+            detailed.classList.remove('show');
+            detailedView.classList.remove('show');
+        });
+    });
+
+    // Function to combine nutrient values for selected foods
+    function combineNutrients(foods) {
+        const combinedNutrients = {};
+
+        // Iterate over selected foods
+        foods.forEach(food => {
+            // Iterate over nutrients in the current food
+            food.foodNutrients.forEach(nutrient => {
+                const { nutrientName, value, unitName } = nutrient;
+
+                // Combine nutrient values for matching nutrients
+                if (combinedNutrients[nutrientName]) {
+                    combinedNutrients[nutrientName].value += value;
+                } else {
+                    combinedNutrients[nutrientName] = { nutrientName, value, unitName };
+                }
+            });
+        });
+
+        // Convert combined nutrients object to array
+        return Object.values(combinedNutrients);
+    }
 });

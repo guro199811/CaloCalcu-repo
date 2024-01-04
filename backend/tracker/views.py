@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+
 
 # Create your views here.
 
@@ -8,3 +9,8 @@ def home(request):
 
 def about(request):
     return render(request, 'tracker/about.html')
+
+def contact(request):
+    return render(request, 'tracker/contact.html')
+
+
