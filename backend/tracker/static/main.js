@@ -1,3 +1,19 @@
+//OnCall Functions
+
+function openSidebar() {
+    document.getElementById("sidebar").style.right = "0";
+}
+
+function closeSidebar() {
+    document.getElementById("sidebar").style.right = "-250px";
+}
+
+function performLogout() {
+    window.location.href = logoutUrl;
+}
+
+
+
 //Hiding and Showing Login Window
 const loginBtn = document.querySelector('.loginBtn')
 const closeBtn = document.querySelector('.icon-close')
@@ -90,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const regRevealPassword = document.getElementById('revealPassword');
 
 
-    passwordInput.addEventListener('input', function () {
+    /*passwordInput.addEventListener('input', function () {
         // Check for password validation (at least 6 characters and contains at least 1 number)
         const password = passwordInput.value;
 
@@ -105,8 +121,11 @@ document.addEventListener('DOMContentLoaded', function() {
     regRevealPassword.addEventListener('change', function () {
         regPasswordInput.type = this.checked ? 'text' : 'password';
         regRepeatPasswordInput.type = this.checked ? 'text' : 'password';
-    });
+    });*/
+
+
 });
+
 
 
 

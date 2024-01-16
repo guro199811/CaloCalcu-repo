@@ -9,8 +9,9 @@ urlpatterns = [
     path('', views.home, name='calo-home'),
     path('about/', views.about, name='calo-about'),
     path('contact/', views.contact, name='calo-contact'),
-    path('login/', auth.login_view, name='calo-login'),
-    path('register/', auth.register_view, name='calo-register')
+    path('login/', auth.login_auth, name='calo-login'),
+    path('register/', auth.register_auth, name='calo-register'), 
+    path('logout/', auth.logout_auth, name='calo-logout')
 ]
 
 if settings.DEBUG:

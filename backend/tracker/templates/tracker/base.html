@@ -16,8 +16,14 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     {% block style %}
     {% endblock style%}
-
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'site.webmanifest' %}">
+    
     <script src="{% static 'headscript.js' %}"></script>
+
     {% block headscript %}
     {% endblock headscript %}
 </head>
@@ -32,7 +38,27 @@
             <a href="{% url 'calo-home' %}">Home</a>
             <a href="{% url 'calo-about' %}">About Us</a>
             <a href="{% url 'calo-contact' %}">Contact</a>
-            <button class="loginBtn">Login</button>
+            {% if user.is_authenticated %}
+            <button class="sidebar-btn" onclick="openSidebar()"><ion-icon name="menu-outline"></ion-icon></button>
+                <script>
+                    var logoutUrl = "{% url 'calo-logout' %}";
+                </script>
+                <div class="sidebar" id="sidebar">
+                    <div class="sidebar-content">
+                        <p>My Data</p>
+                        <p>History</p>
+                        <p>BMI</p>
+                    </div>
+                    <button class="logout-btn" onclick="performLogout()">
+                        Log-Out
+                    </button>
+                    <button class="close-sidebar" onclick="closeSidebar()">
+                        <ion-icon name="close-outline"></ion-icon>
+                    </button>
+                </div>
+            {% else %}
+                <button class="loginBtn">Login</button>
+            {% endif %}
         </nav>
     </header>
         
@@ -45,9 +71,9 @@
                     {% csrf_token %}
                     <h1>Login</h1>
                     <div class="input-box">
-                        <input type="text" placeholder="Email"
-                        name="email" required>
-                        <i class='bx bx-envelope' ></i>
+                        <input type="text" placeholder="Username"
+                        name="username" required>
+                        <i class='bx bx-user' ></i>
                     </div>
                     <div class="input-box">
                         <input type="password" placeholder="******"
@@ -75,7 +101,7 @@
                     <h1>Registration</h1>
                     <div class="input-box">
                         <input type="text" placeholder="Username"
-                        name="name" required>
+                        name="username" required>
                         <i class='bx bx-user' ></i>
                     </div>
                     <div class="input-box">
@@ -85,13 +111,13 @@
                     </div>
                     <div class="input-box">
                         <input type="password" placeholder="Password"
-                        name="password"
+                        name="password1"
                         id="password" required>
                         <i class='bx bx-lock-alt' ></i>
                     </div>
                     <div class="input-box">
                         <input type="password" placeholder="Repeat Password" 
-                        name="repeatpassword"
+                        name="password2"
                         id="repeatpassword" required>
                         <i class='bx bx-lock-alt' ></i>
                     </div>
