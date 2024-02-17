@@ -45,9 +45,9 @@
                 </script>
                 <div class="sidebar" id="sidebar">
                     <div class="sidebar-content">
-                        <p>My Data</p>
-                        <p>History</p>
-                        <p>BMI</p>
+                        <button class="sidebar-option" onclick="openData()">My Data</button>
+                        <button class="sidebar-option" onclick="openHistory()">History</button>
+                        <button class="sidebar-option" onclick="openBmi()">BMI Calculator</button>
                     </div>
                     <button class="logout-btn" onclick="performLogout()">
                         Log-Out
@@ -62,6 +62,46 @@
         </nav>
     </header>
         
+    <div class="outer-option" onclick="closeOuterOption()">
+        <div class="my-data">
+            <h2>My Data</h2>
+            <label for="first_name">First Name: </label>
+            <input type="text" id="first_name" name="first_name" 
+            value="{{ user.first_name }}" disabled>
+            <label for="last_name">Last Name: </label>
+            <input type="text" id="last_name" name="last_name" 
+            value="{{ user.last_name }}" disabled>
+            <button id="user_data"><ion-icon name="create-outline"></ion-icon></button>
+            <div>
+            <a href="#">Reset Email</a>
+            <a href="#">Reset Password</a>
+            </div>
+        </div>
+
+        <div class="my-history">
+
+        </div>
+        <div class="my-bmi">
+            <h2>BMI Calculator</h2>
+            <div class="input-group">
+              <label for="height">Height:</label>
+              <input type="number" id="height" name="height" placeholder="Enter your height">
+              <select id="height-unit">
+                <option value="cm">cm</option>
+                <option value="ft">ft</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="weight">Weight:</label>
+              <input type="number" id="weight" name="weight" placeholder="Enter your weight">
+              <select id="weight-unit">
+                <option value="kg">kg</option>
+                <option value="lb">lb</option>
+              </select>
+            </div>
+            <button id="calculate-bmi" onclick="bmiCalculate()">Calculate BMI</button>
+        </div>
+    </div>
     <div class="auth-container">
         <div class="wrapper">
             <span class="icon-close"><ion-icon name="close-outline"></ion-icon></span>
@@ -105,7 +145,7 @@
                         <i class='bx bx-user' ></i>
                     </div>
                     <div class="input-box">
-                        <input type="text" placeholder="Email"
+                        <input type="email" placeholder="Email"
                         name="email" required>
                         <i class='bx bx-envelope' ></i>
                     </div>

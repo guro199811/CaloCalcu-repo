@@ -95,10 +95,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Create table headers
     scaleTable.innerHTML = `
-        <tr>
-            <th>Name/Description</th>
-            <th>Quantity</th>
-            <th>Energy</th>
+        <tr class="scaleHeader">
+            <th class='scaleHeaderRow'>Name/Description</th>
+            <th class='scaleHeaderRow'>Quantity</th>
+            <th class='scaleHeaderRow'>Energy</th>
         </tr>
     `;
 
@@ -163,10 +163,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Create a new table row for the scale
             const scaleTableRow = document.createElement('tr');
+            scaleTableRow.id = 'scaleTableRow'
             scaleTableRow.innerHTML = `
-            <td>${description}</td>
-            ${servingSize !== '' ? `<td>${servingSize} ${servingSizeUnit}</td>` : `<td>1</td>`}
-            <td>${getEnergyValue(foodNutrients)} kcal</td>
+            <td class='scaleTableData'>${description}</td>
+            ${servingSize !== '' ? `<td class='scaleTableData'>${servingSize} ${servingSizeUnit}</td>` : `<td class='scaleTableData'>1</td>`}
+            <td class='scaleTableData'>${getEnergyValue(foodNutrients)} kcal</td>
             `;
             scaleTable.appendChild(scaleTableRow);
 

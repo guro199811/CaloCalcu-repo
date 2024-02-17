@@ -4,15 +4,34 @@ from django.contrib.auth import login, logout
 import logging
 
 
+# Custom User Creation Form
+from django import forms
+from django.contrib.auth.models import User
+
+class CustomUserCreationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")
+
+    def save(self, commit=True):
+        user = super(CustomUserCreationForm, self).save(commit=False)
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+        return user
+    
+
+#Register and login are from here on
+
 def register_auth(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         logging.warning(request.POST)
         if form.is_valid():
             user = form.save()
-            logging.warning("Registered")
             login(request, user)
-            logging.warning("Logged In From Registration")
             return redirect('calo-home')
         else:
             logging.warning('Reg Form Is NOT Valid')
@@ -28,7 +47,6 @@ def login_auth(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            logging.warning('Logged In')
             return redirect('calo-home')
         else:
             logging.warning('Log Form Is NOT Valid')
@@ -42,3 +60,5 @@ def login_auth(request):
 def logout_auth(request):
     logout(request)
     return redirect('calo-home')
+
+

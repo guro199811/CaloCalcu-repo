@@ -1,6 +1,8 @@
 /* Base.html CSS */
 /* Import Google Fonts */
 @import url("//fonts.googleapis.com/css2?family=Rye:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
+@import url("//fonts.googleapis.com/css2?family=Rammetto+One:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
+
 
 * {
   margin:0;
@@ -54,9 +56,9 @@ body {
 }
 
 .navbar-logo img {
-  width: 200px; /* Adjust the width to your preference */
-  height: auto; /* Maintain the aspect ratio */
-  display: block; /* Remove any default inline spacing */
+  width: 200px;
+  height: auto;
+  display: block;
   margin-top:-12px;
   margin-bottom:-12px;
 }
@@ -492,10 +494,11 @@ body {
   margin-top:15px;
   margin-left:10px;
   margin-right:10px;
-  border-radius:17px 17px 17px 17px;
   justify-content:flex-start;
   overflow: scroll;
   box-sizing: content-box;
+  width: 100%;
+  overflow-x: auto;
 }
 
 #showDetailed{
@@ -527,7 +530,7 @@ body {
 #scaleTable {
   width: 100%;
   border-collapse: collapse;
-  background-color: #f2f2f2;
+  background-color: transparent;
   color: black;
   display: none;
   margin-bottom:5px;
@@ -538,28 +541,40 @@ body {
 #scaleTable th, #scaleTable td {
   border: 1px solid #ddd;
   padding: 8px;
-  text-align: left;
-  color:black;
-  background-color: #919191;
   text-align: center;
 }
 
-#scaleTable th {
-  color:black;
-  background-color: #f2f2f2;
-}
 
-/* Selected item row styles */
 #scaleTable tr:last-child {
-  color:black;
-  background-color: #f2f2f2;
   font-weight: bold;
 }
 
-/* Hover effect on rows */
-#scaleTable tr:not(:last-child):hover {
-  color:black;
-  background-color: #f2f2f2;
+.scaleHeader{
+  background-color: rgba(0, 18, 53, 0.384);
+}
+
+.scaleHeader,
+.scaleTableRow {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  white-space: nowrap;
+  color:white;
+}
+
+.scaleTableData{
+  color:white;
+}
+
+.scaleHeaderRow {
+  background-color: #42424236;
+  color: rgb(255, 255, 255);
+}
+.scaleTableRow:nth-child(even) {
+  background-color: transparent
+}
+.scaleTableRow:hover {
+  background-color: #1f374b;
 }
 
 #calorieCounter{
@@ -573,7 +588,7 @@ body {
   z-index: 9999;
   width:100vw;
   height:100vh;
-  backdrop-filter: blur(1px);
+  backdrop-filter: blur(0px) grayscale(0);
   background-color: transparent;
   display: flex;
   top: 0px;
@@ -603,13 +618,13 @@ body {
  }
 
 .detailed.show{
-  transform: scale(1)
+  transform: scale(1);
 }
 
 .detailedView.show{
   transform: scale(1);
   background-color: rgba(0, 0, 0, 0.288);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px) grayscale(0.5);
 }
 
 #detailed .closeDetailed{
@@ -621,28 +636,252 @@ body {
   border-style:none;
   border-bottom-left-radius:19px;
  }
+ 
+/* SideBar Outer Options */
+
+.sidebar-btn{
+  background: transparent;
+  backdrop-filter: blur(20px);
+  border: 2px solid #fff;
+  outline:none;
+  border-radius: 6px;
+  cursor: pointer;
+  color:#fff;
+  font-weight: 500;
+  margin-left: 40px;
+  width:50px;
+  height:50px;
+  font-size:38px;
+  transition: 0.5s;
+}
+
+.sidebar-btn:hover{
+  background:#fff;
+  color:black
+}
+
 
 
  .sidebar {
   position: fixed;
+  display: flex;
+  flex-direction:column;
+  justify-content:flex-start;
   top: 0;
   right: -250px; /* Initially hidden */
+  padding:25px;
+  padding-top: 100px !important;
   width: 250px;
   height: 100%;
-  background-color: #333;
   color: white;
-  padding: 20px;
+  border-top-left-radius:19px;
+  border-bottom-left-radius:19px;
+  background-color:rgba(51,51,51,0.31);
+  backdrop-filter:blur(5.14px) grayscale(1);
+  overflow: hidden;
   transition: right 0.3s ease-in-out;
 }
 
-.close-btn {
+.close-sidebar {
   background-color: #ddd;
   color: #333;
   border: none;
   padding: 10px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.close-btn:hover {
+.close-sidebar:hover {
   background-color: #aaa;
 }
+
+.sidebar .close-sidebar{
+  align-self:flex-start;
+  position: fixed;
+  width:3vw;
+  height:5vh;
+  font-size:36px;
+  border-style:none;
+  border-bottom-right-radius:19px;
+  top:0px;
+  left:0px;
+  display:flex;
+  align-items:center;
+ }
+
+ #sidebar .sidebar-content{
+  font-family:'Rammetto One', display;
+  padding-left:8px;
+  padding-bottom:25px;
+  font-size:17px;
+  display: flex;
+  flex-direction: column;
+ }
+
+ .sidebar-option{
+  margin: 5px 0px 5px 0px;
+ }
+ 
+
+
+ #sidebar .logout-btn{
+  color:#b70000;
+  background-color: transparent;
+  font-size:19px;
+  border-style:solid;
+  border-color:#8e0000;
+  border-top-left-radius:10px;
+  border-top-right-radius:10px;
+  border-bottom-left-radius:10px;
+  border-bottom-right-radius:10px;
+  transition: all 0.5s;
+  padding: 5px;
+ }
+
+
+ #sidebar .logout-btn:hover{
+  background-color: rgb(255, 255, 255);
+  border-color: black;
+  color: black;
+ }
+
+
+/* SideBar Option Css's */
+
+/* mainly for background blur and animations */
+.outer-option{
+  position: fixed;
+  z-index: 7998;
+  width:100vw;
+  height:100vh;
+  backdrop-filter: blur(0px) grayscale(0);
+  background-color: transparent;
+  display: flex;
+  top: 0px;
+  transform: scale(0);
+  transition: backdrop-filter 0.3s;
+}
+
+.outer-option.show{
+  transform: scale(1);
+  background-color: rgba(0, 0, 0, 0.288);
+  backdrop-filter: blur(5px) grayscale(0.5);
+}
+
+
+.my-data,
+.my-history,
+.my-bmi{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  height: 70vh;
+  z-index:7999;
+  position:fixed;
+  bottom:15vh;
+  width:60vw;
+  margin-left: 20vw;
+  margin-right: 20vw;
+  background-color:#2d2d2d;
+  box-shadow:0px 0px 17px 0px rgba(0,0,0,0.98) inset;
+  color:white;
+  transform: scale(0);
+  overflow: scroll;
+  border-radius: 20px;
+  transition: all 0.5s;
+}
+
+.my-data.show,
+.my-history.show,
+.my-bmi.show {
+  transform: scale(1);
+}
+
+.outer-option .close-option{
+  align-self:flex-end;
+  position: fixed;
+  width:3vw;
+  height:5vh;
+  font-size:36px;
+  border-style:none;
+  border-bottom-left-radius:19px;
+}
+
+/* Bmi */
+.outer-option .my-bmi{
+  display:flex;
+  display:flex;
+  flex-direction:column;
+ }
+ 
+
+.outer-option .my-bmi .input-group{
+  justify-content:center;
+  font-size:18px;
+  color:#ffffff;
+  line-height:1.8em;
+  flex-direction:column;
+  width:auto !important;
+  height:auto !important;
+  margin-top:39px;
+}
+ 
+ 
+.my-bmi .input-group label{
+  margin-right:27px;
+  font-family:'Prosto One', display;
+  border-radius:10px;
+ }
+ 
+ 
+
+#height,
+#weight{
+  text-align:center;
+  font-family:'Prosto One', display;
+  border-radius:10px;
+ }
+ 
+ 
+#height-unit,
+#weight-unit{
+  text-align:center;
+  margin-top:5px;
+  font-family:'Prosto One', display;
+  border-radius:5px;
+ }
+ 
+
+#weight-unit{
+  margin-bottom:41px;
+ }
+
+
+.outer-option .my-bmi h2{
+  margin-top:60px;
+ }
+ 
+
+
+ /* Button */
+#calculate-bmi{
+  width:248px;
+  height:45px;
+  border-top-left-radius:10px;
+  border-top-right-radius:10px;
+  border-bottom-left-radius:10px;
+  border-bottom-right-radius:10px;
+  background-color:#00325b;
+  color:#ffffff;
+  font-family:'Prosto One', display;
+  border-style:none;
+  box-shadow:0px 0px 30px 0px #f9f9f9;
+  transition: all 0.6s;
+
+}
+#calculate-bmi:hover{
+  background-color: white;
+  color: #00325b;
+  box-shadow:0px 0px 30px 0px #00325b;
+ }
