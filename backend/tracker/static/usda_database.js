@@ -49,13 +49,14 @@ document.addEventListener('DOMContentLoaded', function () {
     
     function selectItem(food) {
         // Extracting relevant information
-        const { description, foodCategory, servingSize, servingSizeUnit, householdServingFullText, foodNutrients } = food;
+        const { fdcId, description, foodCategory, servingSize, servingSizeUnit, householdServingFullText, foodNutrients } = food;
     
         // Formatting food nutrients
         const nutrientsHTML = foodNutrients.map(nutrient => `<p class="bucket-item">${nutrient.nutrientName}: ${nutrient.value} ${nutrient.unitName}</p>`).join('');
     
         // Creating HTML for selected item
         const selectedItemHTML = `
+        <li class="bucket-item"><strong>FDC ID:</strong> ${fdcId}</li>
         <li class="bucket-item"><strong>Description:</strong> ${description}</li>
         <li class="bucket-item"><strong>Category:</strong> ${foodCategory}</li>
         ${servingSize !== undefined ? `<li class="bucket-item"><strong>Serving Size:</strong> ${servingSize} ${servingSizeUnit}</li>` : `<li class="bucket-item"><strong>Quantity:</strong> 1</li>`}
@@ -64,12 +65,12 @@ document.addEventListener('DOMContentLoaded', function () {
         ${nutrientsHTML}
     `;
     
-        const addFood = document.getElementById('addFood')
-        // Updating "bucket" div
-        bucket.innerHTML = selectedItemHTML;
-        addFood.style.display = 'block';
-        selectedFoods.push({ description, foodNutrients });
-    }
+    const addFood = document.getElementById('addFood')
+    // Updating "bucket" div
+    bucket.innerHTML = selectedItemHTML;
+    addFood.style.display = 'block';
+    selectedFoods.push({ fdcId, description, foodNutrients });
+}
 
     // Debounce function to delay API requests while typing
     function debounce(func, delay = 300) {
@@ -106,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Extract relevant information from the selected food
         const parser = new DOMParser();
         const doc = parser.parseFromString(selectedFood, 'text/html');
-        const description = doc.body.querySelector('.bucket-item:first-child').textContent.trim();
+        const description = getDescriptionValue(doc, 'Description');
         const servingSize = getDescriptionValue(doc, 'Serving Size');
         const servingSizeUnit = getDescriptionUnit(doc, 'Serving Size');
         const householdServingFullText = getDescriptionValue(doc, 'Household Serving');
@@ -179,10 +180,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const showDetailed = document.getElementById('showDetailed');
             showDetailed.style.display = 'block';
+            const showtoHistory = document.getElementById('saveToHistory');
+            showtoHistory.style.display = 'block'
             const showScale = document.getElementById('scaleTable');
             showScale.style.display = 'block';
             calorieCounter.style.display = 'block';
-        }
+            
+            // Ajaxing the Food Item To Pass it to backend
+            document.getElementById('saveToHistory').addEventListener('click', function() {
+            csrftoken = document.querySelector('[name="csrfmiddlewaretoken"]').value
+            fetch('/add-food-history/', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': csrftoken,
+                },
+                body: JSON.stringify({ selectedFoods }) // Send selected food data
+              })
+              .then(response => response.json())
+              .then(data => {
+                alert('Successfull')
+              })
+              .catch(error => {
+                alert('Cant Handle This particular request')
+              });
+            });
+    }
+        
     });
 
     // Append the table to the scale div

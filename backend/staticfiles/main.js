@@ -237,3 +237,33 @@ function  bmiCalculate(){
     alert(`Your BMI is: ${bmi.toFixed(2)}`);
 };
 
+
+
+
+// Retrieving Ajaxed Request From backend, food_history
+document.getElementById('history').addEventListener('click', function() {
+    fetch('/retrieve-food-history/')
+    .then(response => response.json())
+    .then(data => {
+        const foodHistoryElement = document.getElementById('my-history');
+        foodHistoryElement.innerHTML = '';  // Clear existing content
+
+        data.forEach(foodEntry => {
+            const entryElement = document.createElement('div');
+            entryElement.classList.add('food-entry');  // Adding a CSS class
+
+            // Access food entry data
+            const date = foodEntry.date_added;
+            const foodList = foodEntry.food_list;
+
+            // Display food entry details
+            entryElement.innerHTML = `- ${foodList.join(', ')} (added on ${date})`;
+
+            foodHistoryElement.appendChild(entryElement);
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching food history:', error);
+        // Handling errors
+    });
+});

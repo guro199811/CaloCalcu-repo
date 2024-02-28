@@ -8,6 +8,7 @@
 
 
 {% block content %}
+
 <div class="blockbox">
     <div class="food-selection">
         <h1 class="test-title">Food Selection</h1>
@@ -26,7 +27,10 @@
             <!--Being Populated from js-->
         </div>
         <div id="calorieCounter"></div>
-        <button id="showDetailed">Show Detailed Overview / Combined Composition</button>
+        <button id="showDetailed">Show Detailed Overview</button>
+        {% if user.is_authenticated %}
+        <button id="saveToHistory">Save To History</button>
+        {% endif %}
     </div>
 </div>
 <div id="detailedView" class="detailedView">

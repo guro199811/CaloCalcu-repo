@@ -46,7 +46,7 @@
                 <div class="sidebar" id="sidebar">
                     <div class="sidebar-content">
                         <button class="sidebar-option" onclick="openData()">My Data</button>
-                        <button class="sidebar-option" onclick="openHistory()">History</button>
+                        <button class="sidebar-option" id="history" onclick="openHistory()">History</button>
                         <button class="sidebar-option" onclick="openBmi()">BMI Calculator</button>
                     </div>
                     <button class="logout-btn" onclick="performLogout()">
@@ -78,8 +78,9 @@
             </div>
         </div>
 
-        <div class="my-history">
-
+        <div class="my-history" id="my-history">
+            
+            
         </div>
         <div class="my-bmi">
             <h2>BMI Calculator</h2>

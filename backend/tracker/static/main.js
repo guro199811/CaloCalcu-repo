@@ -28,6 +28,39 @@ function openHistory() {
     openDataButton.classList.remove('show');
     openHistoryButton.classList.add('show');
     openBmiButton.classList.remove('show');
+    // Retrieving Ajaxed Request From backend, food_history
+    fetch('/retrieve-food-history/')
+    .then(response => response.json())
+    .then(data => {
+        const foodHistoryElement = document.getElementById('my-history');
+        foodHistoryElement.innerHTML = '';  // Clear existing content
+
+        data.forEach(foodEntry => {
+            const entryElement = document.createElement('div');
+            entryElement.classList.add('food-entry');  // Adding a CSS class
+
+            // Access food entry data
+            const date = foodEntry.date_added;
+            const foodList = foodEntry.food_list;  // Original list of IDs from the database
+            const foodData = foodEntry.food_data;  // List of objects with 'name' and 'count'
+
+            // Option 1: Display original IDs only (if desired)
+            entryElement.textContent = `- ${foodList.join(', ')} (added on ${date})`;
+
+            // Option 2: Display processed food data (name and count)
+            let foodDetails = '';
+            foodData.forEach(foodItem => {
+                foodDetails += `- ${foodItem.name} (x${foodItem.count})\n`;
+            });
+            entryElement.textContent = `- ${foodDetails} (added on ${date})`;
+
+            foodHistoryElement.appendChild(entryElement);
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching food history:', error);
+        // Handle errors
+    });
 }
 
 function openBmi() {
@@ -236,4 +269,7 @@ function  bmiCalculate(){
     // Display BMI result (you can replace this with other logic)
     alert(`Your BMI is: ${bmi.toFixed(2)}`);
 };
+
+
+
 
