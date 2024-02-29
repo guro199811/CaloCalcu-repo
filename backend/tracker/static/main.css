@@ -2,6 +2,7 @@
 /* Import Google Fonts */
 @import url("//fonts.googleapis.com/css2?family=Rye:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
 @import url("//fonts.googleapis.com/css2?family=Rammetto+One:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
+@import url("//fonts.googleapis.com/css2?family=Potta+One:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
 
 
 * {
@@ -896,7 +897,13 @@ body {
 
 .outer-option .my-bmi h2{
   margin-top:60px;
+  font-family:'Prosto One', display;
  }
+
+#no-history-message{
+  font-family:'Prosto One', display;
+  margin-top:27vh;
+}
  
 
 
@@ -988,6 +995,7 @@ body {
 .my-data h2{
   margin-top:40px;
   margin-bottom:30px;
+  font-family:'Prosto One', display;
 }
 
 /* Division */
@@ -1000,4 +1008,51 @@ body {
   align-items:center;
  }
  
- 
+/* Food History Stylings */
+
+
+/* Th */
+#my-history tr th{
+ font-size:24px;
+ font-family:'Potta One', display;
+ padding-top:20px;
+ padding-bottom:20px;
+}
+
+/* Table Data */
+#my-history tr td{
+ border-style:solid;
+ border-width:1px;
+ border-color:#efefef;
+ border-top-left-radius:5px;
+ border-top-right-radius:5px;
+ border-bottom-left-radius:5px;
+ border-bottom-right-radius:5px;
+ padding-left:40px;
+ padding-right:40px;
+ padding-top:7px;
+ padding-bottom:7px;
+ text-transform:capitalize;
+ font-size:17px;
+}
+
+/* Body Of Table */
+#my-history tbody{
+ margin-left:40px;
+ margin-right:40px;
+}
+
+/* Remove history */
+#removeHistory{
+  width:20px;
+  height:20px;
+  background-color:#ff1414;
+  border-style:none;
+  border-width:0px;
+  border-top-left-radius:7px;
+  border-top-right-radius:7px;
+  border-bottom-left-radius:7px;
+  border-bottom-right-radius:7px;
+  padding-left:0.05px;
+  padding-top:0.05px;
+ }

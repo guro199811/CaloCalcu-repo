@@ -14,7 +14,8 @@ urlpatterns = [
     path('register/', auth.register_auth, name='calo-register'), 
     path('logout/', auth.logout_auth, name='calo-logout'),
     path('add-food-history/', logic.add_food_history, name='add_food_history'),
-    path('retrieve-food-history/', logic.retrieve_food_history, name='retieve_food_history')
+    path('retrieve-food-history/', logic.retrieve_food_history, name='retieve_food_history'),
+    path('remove-food-entry/', logic.remove_food_entry, name='remove_food_entry')
 ]
 
 if settings.DEBUG:

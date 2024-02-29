@@ -19,7 +19,7 @@ function openData() {
     openBmiButton.classList.remove('show');
 }
 
-function openHistory() {
+// function openHistory() {
     // Prevent closing outer div when clicking inside window
     openHistoryButton.addEventListener('click', (event) => {
         event.stopPropagation(); 
@@ -28,7 +28,120 @@ function openHistory() {
     openDataButton.classList.remove('show');
     openHistoryButton.classList.add('show');
     openBmiButton.classList.remove('show');
+    // Retrieving Ajaxed Request From backend, food_history
+    fetch('/retrieve-food-history/')
+    .then(response => response.json())
+    .then(data => {
+        const historyTable = document.getElementById('my-history');
+        historyTable.innerHTML = '';  // Clear existing content
+
+        // Create and append thead with headers
+        const tableHead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        const headerNames = ['Food History']; // Adjust based on your data
+
+        headerNames.forEach(name => {
+            const headerCell = document.createElement('th');
+            headerCell.textContent = name;
+            headerRow.appendChild(headerCell);
+        });
+        tableHead.appendChild(headerRow);
+        historyTable.appendChild(tableHead);
+        
+
+        // Create and append tbody for data
+        const tableBody = document.createElement('tbody');
+        data.forEach(foodEntry => {
+            // Create table row
+            const row = document.createElement('tr');
+
+            // Create cells for name and date
+            const idCell = document.createElement('td');
+            const nameCell = document.createElement('td');
+            const dateCell = document.createElement('td');
+            const removeCell = document.createElement('td');
+
+            // Get food details from the processed data (name and count)
+            const foodDetails = foodEntry.food_data.map(foodItem => `${foodItem.name} (x${foodItem.count})`);
+
+            idCell.textContent = foodEntry.food_hist_id;
+            idCell.dataset.histId = foodEntry.food_hist_id;
+            idCell.style.display = 'none';
+
+            nameCell.textContent = foodDetails;
+            dateCell.textContent = `Added on ${foodEntry.date_added}`;
+            removeCell.innerHTML = `
+            <button id="removeHistory" 
+            onclick="removeHist(${foodEntry.food_hist_id})">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>`;
+
+            // Append cells to row
+            row.appendChild(idCell)
+            row.appendChild(nameCell);
+            row.appendChild(dateCell);
+            row.appendChild(removeCell);
+
+            // Append row to tbody
+            tableBody.appendChild(row);
+        });
+        historyTable.appendChild(tableBody);
+    })
+    .catch(error => {
+        console.error('Error fetching food history:', error);
+        // Handle errors
+    });
+
+
+// }
+
+
+function removeHist(hist_id) {
+    fetch('/remove-food-entry/', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'),
+        },
+        body: JSON.stringify({ 'hist_id': hist_id }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Directly use hist_id from the function parameter
+            const rowToRemove = document.querySelector(`tr[food_hist_id="${hist_id}"]`);
+
+            if (rowToRemove) {
+                rowToRemove.parentNode.removeChild(rowToRemove);
+            } else {
+                console.warn('Row with hist_id:', hist_id, 'not found');
+            }
+        } else {
+            console.error('Error removing food entry:', data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error sending request:', error);
+    });
 }
+
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
 
 function openBmi() {
     // Prevent closing outer div when clicking inside window
@@ -240,30 +353,3 @@ function  bmiCalculate(){
 
 
 
-// Retrieving Ajaxed Request From backend, food_history
-document.getElementById('history').addEventListener('click', function() {
-    fetch('/retrieve-food-history/')
-    .then(response => response.json())
-    .then(data => {
-        const foodHistoryElement = document.getElementById('my-history');
-        foodHistoryElement.innerHTML = '';  // Clear existing content
-
-        data.forEach(foodEntry => {
-            const entryElement = document.createElement('div');
-            entryElement.classList.add('food-entry');  // Adding a CSS class
-
-            // Access food entry data
-            const date = foodEntry.date_added;
-            const foodList = foodEntry.food_list;
-
-            // Display food entry details
-            entryElement.innerHTML = `- ${foodList.join(', ')} (added on ${date})`;
-
-            foodHistoryElement.appendChild(entryElement);
-        });
-    })
-    .catch(error => {
-        console.error('Error fetching food history:', error);
-        // Handling errors
-    });
-});

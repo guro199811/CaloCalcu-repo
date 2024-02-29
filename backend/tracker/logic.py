@@ -8,6 +8,11 @@ import logging
 from .models import *
 from django.db.models import Q  # For advanced filtering
 from collections import Counter
+from django.http import JsonResponse, HttpResponseNotFound
+
+
+
+
 
 @csrf_exempt  #Should Remove in production
 @login_required  # Ensuring authenticated users
@@ -78,7 +83,8 @@ def retrieve_food_history(request):
                 data.append({
                     'date_added': food_entry.date_added.strftime('%Y-%m-%d'),
                     'food_data': food_data,
-                    'food_list': food_entry.food_list,  # Include original food IDs from the database
+                    'food_list': food_entry.food_list,
+                    'food_hist_id': food_entry.id,  # Include original food IDs from the database
                 })
 
             return JsonResponse(data, safe=False)
@@ -88,3 +94,32 @@ def retrieve_food_history(request):
             return JsonResponse({'error': str(e)}, status=500)
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
+    
+
+@csrf_exempt  #Should Remove in production
+@login_required  # Ensuring authenticated users
+def remove_food_entry(request):
+    if request.method == 'DELETE':
+        try:
+            data = json.loads(request.body)
+            hist_id = data.get('hist_id')
+
+            if not hist_id:
+                return JsonResponse({'error': 'Missing required field "hist_id"'}, status=400)
+
+            # Retrieving and deleting the food entry using hist_id
+            food_entry = FoodHistory.objects.filter(pk=hist_id).first()
+
+            if not food_entry:
+                return JsonResponse({'error': 'Food entry not found'}, status=404)
+
+            food_entry.delete()
+
+            return JsonResponse({'success': True})
+
+        except Exception as e:
+            print(f'Error removing food entry: {e}')
+            return JsonResponse({'error': 'An error occurred'}, status=500)
+
+    else:
+        return HttpResponseNotFound('Method not allowed')
