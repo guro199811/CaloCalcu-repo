@@ -187,24 +187,6 @@ document.addEventListener('DOMContentLoaded', function () {
             calorieCounter.style.display = 'block';
             
             // Ajaxing the Food Item To Pass it to backend
-            document.getElementById('saveToHistory').addEventListener('click', function() {
-            csrftoken = document.querySelector('[name="csrfmiddlewaretoken"]').value
-            fetch('/add-food-history/', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'X-CSRFToken': csrftoken,
-                },
-                body: JSON.stringify({ selectedFoods }) // Send selected food data
-              })
-              .then(response => response.json())
-              .then(data => {
-                alert('Successfull')
-              })
-              .catch(error => {
-                alert('Cant Handle This particular request')
-              });
-            });
     }
         
     });
@@ -216,7 +198,24 @@ document.addEventListener('DOMContentLoaded', function () {
     
 });
 
-
+document.getElementById('saveToHistory').addEventListener('click', function() {
+    csrftoken = document.querySelector('[name="csrfmiddlewaretoken"]').value
+    fetch('/add-food-history/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken,
+        },
+        body: JSON.stringify({ selectedFoods }) // Send selected food data
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('Successfull')
+      })
+      .catch(error => {
+        alert('Cant Handle This particular request')
+      });
+    });
 
 
 //const registerLink = document.querySelector('.register-link')

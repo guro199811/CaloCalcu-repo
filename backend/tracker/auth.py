@@ -49,12 +49,41 @@ def login_auth(request):
             login(request, user)
             return redirect('calo-home')
         else:
-            logging.warning('Log Form Is NOT Valid')
-            logging.warning(form.errors)
+            username_error = None
+            password_error = None
+            for error_list in form.errors.values():  # Iterate over error lists
+                for error in error_list:
+                    if 'username' in error and not username_error:
+                        username_error = error
+                    elif 'password' in error and not password_error:
+                        password_error = error
+
+            # Render the template with specific error messages
+            context = {'form': form}
+            if username_error:
+                context['username_error'] = username_error
+            if password_error:
+                context['password_error'] = password_error
+
+            return render(request, 'tracker/unsuccesfull_login.html', context)
     else:
         form = AuthenticationForm()
 
-    return render(request, 'tracker/home.html', {'form': form})
+    return render(request, 'tracker/unsuccesfull_login.html', {'form': form})
+
+
+def reset_password(request):
+    if request.method == 'GET':
+
+        form = {
+            'forgot_password' : True
+        }
+
+        return render(request, 'tracker/unsuccesfull_login.html', form)
+    elif request.method == 'POST':
+        email = request.POST.get('email')
+        return render(request, 'tracker/unsuccesfull_login.html')
+
 
 
 def logout_auth(request):

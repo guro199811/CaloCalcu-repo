@@ -8,10 +8,11 @@ from . import logic
 
 urlpatterns = [
     path('', views.home, name='calo-home'),
-    path('about/', views.about, name='calo-about'),
     path('contact/', views.contact, name='calo-contact'),
     path('login/', auth.login_auth, name='calo-login'),
-    path('register/', auth.register_auth, name='calo-register'), 
+    path('register/', auth.register_auth, name='calo-register'),
+    path('login-error/', auth.login, name='calo-login-error'),
+    path('reset-password/', auth.reset_password, name='calo-res-pas'),
     path('logout/', auth.logout_auth, name='calo-logout'),
     path('add-food-history/', logic.add_food_history, name='add_food_history'),
     path('retrieve-food-history/', logic.retrieve_food_history, name='retieve_food_history'),

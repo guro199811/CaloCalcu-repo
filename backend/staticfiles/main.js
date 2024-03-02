@@ -19,7 +19,7 @@ function openData() {
     openBmiButton.classList.remove('show');
 }
 
-// function openHistory() {
+function openHistory() {
     // Prevent closing outer div when clicking inside window
     openHistoryButton.addEventListener('click', (event) => {
         event.stopPropagation(); 
@@ -32,98 +32,116 @@ function openData() {
     fetch('/retrieve-food-history/')
     .then(response => response.json())
     .then(data => {
-        const historyTable = document.getElementById('my-history');
-        historyTable.innerHTML = '';  // Clear existing content
+        if (data.length === 0) {
+            // No food history records found
+            const noHistoryText = document.getElementById('no-history-message');
+            noHistoryText.style.display = 'block';
+            noHistoryText.textContent = 'You don\'t have any food history entries yet.'; // Use single quotes for clarity
+        }
+        else{
+            const historyTable = document.getElementById('my-history');
+            historyTable.innerHTML = '';  // Clear existing content
 
-        // Create and append thead with headers
-        const tableHead = document.createElement('thead');
-        const headerRow = document.createElement('tr');
-        const headerNames = ['Food History']; // Adjust based on your data
+            // Create and append thead with headers
+            const tableHead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            const headerNames = ['Food History']; // Adjust based on your data
 
-        headerNames.forEach(name => {
-            const headerCell = document.createElement('th');
-            headerCell.textContent = name;
-            headerRow.appendChild(headerCell);
-        });
-        tableHead.appendChild(headerRow);
-        historyTable.appendChild(tableHead);
-        
+            headerNames.forEach(name => {
+                const headerCell = document.createElement('th');
+                headerCell.textContent = name;
+                headerRow.appendChild(headerCell);
+            });
+            tableHead.appendChild(headerRow);
+            historyTable.appendChild(tableHead);
+            
 
-        // Create and append tbody for data
-        const tableBody = document.createElement('tbody');
-        data.forEach(foodEntry => {
-            // Create table row
-            const row = document.createElement('tr');
+            // Create and append tbody for data
+            const tableBody = document.createElement('tbody');
+            data.forEach(foodEntry => {
+                // Create table row
+                const row = document.createElement('tr');
 
-            // Create cells for name and date
-            const idCell = document.createElement('td');
-            const nameCell = document.createElement('td');
-            const dateCell = document.createElement('td');
-            const removeCell = document.createElement('td');
 
-            // Get food details from the processed data (name and count)
-            const foodDetails = foodEntry.food_data.map(foodItem => `${foodItem.name} (x${foodItem.count})`);
+                const nameCell = document.createElement('td');
+                const dateCell = document.createElement('td');
+                const removeCell = document.createElement('td');
 
-            idCell.textContent = foodEntry.food_hist_id;
-            idCell.dataset.histId = foodEntry.food_hist_id;
-            idCell.style.display = 'none';
 
-            nameCell.textContent = foodDetails;
-            dateCell.textContent = `Added on ${foodEntry.date_added}`;
-            removeCell.innerHTML = `
-            <button id="removeHistory" 
-            onclick="removeHist(${foodEntry.food_hist_id})">
-                <ion-icon name="close-outline"></ion-icon>
-            </button>`;
+                const foodDetails = foodEntry.food_data.map(foodItem => `${foodItem.name} (x${foodItem.count})`);
 
-            // Append cells to row
-            row.appendChild(idCell)
-            row.appendChild(nameCell);
-            row.appendChild(dateCell);
-            row.appendChild(removeCell);
 
-            // Append row to tbody
-            tableBody.appendChild(row);
-        });
-        historyTable.appendChild(tableBody);
-    })
+                row.dataset.histId = foodEntry.food_hist_id;
+
+                nameCell.textContent = foodDetails;
+                dateCell.textContent = `Added on ${foodEntry.date_added}`;
+                removeCell.innerHTML = `
+                <button id="removeHistory" 
+                onclick="removeHist(${foodEntry.food_hist_id})">
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>`;
+
+                // Append cells to row
+                row.appendChild(nameCell);
+                row.appendChild(dateCell);
+                row.appendChild(removeCell);
+
+                // Append row to tbody
+                tableBody.appendChild(row);
+            });
+            historyTable.appendChild(tableBody); 
+        }
+        })
+    
     .catch(error => {
         console.error('Error fetching food history:', error);
         // Handle errors
     });
 
 
-// }
+};
 
 
 function removeHist(hist_id) {
-    fetch('/remove-food-entry/', {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken'),
-        },
-        body: JSON.stringify({ 'hist_id': hist_id }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Directly use hist_id from the function parameter
-            const rowToRemove = document.querySelector(`tr[food_hist_id="${hist_id}"]`);
+    // 1. Visually remove the row immediately
+    const rowToRemove = document.querySelector(`tr[data-hist-id="${hist_id}"]`);
 
-            if (rowToRemove) {
-                rowToRemove.parentNode.removeChild(rowToRemove);
-            } else {
-                console.warn('Row with hist_id:', hist_id, 'not found');
+    if (rowToRemove) {
+        requestAnimationFrame(() => {
+            rowToRemove.parentNode.removeChild(rowToRemove); // Removes the entire row
+        });
+
+
+        // 2. Send the DELETE request to the backend
+        fetch('/remove-food-entry/', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: JSON.stringify({ 'hist_id': hist_id }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (!data.success) {
+                // Handling potential errors from the backend
+                console.error('Error removing food entry from server:', data.error);
+                requestAnimationFrame(() => {
+                    rowToRemove.parentNode.insertBefore(rowToRemove, rowToRemove.nextSibling);
+                });
             }
-        } else {
-            console.error('Error removing food entry:', data.error);
-        }
-    })
-    .catch(error => {
-        console.error('Error sending request:', error);
-    });
+        })
+        .catch(error => {
+            console.error('Error sending request:', error);
+
+            // Optionally: Handle network errors or other issues
+            // (Considering: display an error message to the user)
+        });
+    } else {
+        console.warn('Row with hist_id:', hist_id, 'not found');
+    }
 }
+
 
 
 function getCookie(cname) {
@@ -134,13 +152,13 @@ function getCookie(cname) {
         var c = ca[i];
         while (c.charAt(0) == ' ') {
             c = c.substring(1);
-        }
+        };
         if (c.indexOf(name) == 0) {
             return c.substring(name.length, c.length);
-        }
+        };
     }
     return "";
-}
+};
 
 
 function openBmi() {

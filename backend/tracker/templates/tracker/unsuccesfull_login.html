@@ -1,0 +1,60 @@
+{% extends "tracker/base.html" %}
+
+{% block title %}
+    <title>Calucalcu</title>
+{% endblock %}
+
+{% block content %}
+{% if forgot_password %}
+
+    <div class="outer-reset-div">
+        <div class="inner-reset-div">
+            <form action="{% url 'calo-res-pas' %}" method="POST">
+            {% csrf_token %}
+            <h2 class="header-text">Password Reset</h2>
+                <label for="email">
+                    Password Reset Link Will Be Sent To This Email 
+                    <input type="email" name="email" id="r_email"
+                    placeholder="Email Field">
+                </label>
+                <button type="submit" class="send_reset_email">
+                    Send A Reset Email
+                </button>
+            </form>
+        </div>
+    </div>
+
+{% else %}
+    <!-- Handling Username Errors  -->
+    {% if username_error %}
+        <p class="error">{{ username_error }}</p>
+    {% endif %}
+
+    {% if password_error %}
+        <p class="error">{{ password_error }}</p>
+    {% endif %}
+
+    <style>
+        .error{
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 27px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        .auth-container{
+            transform: scale(1);
+            opacity: 1;
+            z-index: 6000;
+            background: rgba(0, 0, 0, 0.168);
+        }
+        .wrapper{
+            transform: scale(1);
+            z-index: 8989;
+        }
+        .wrapper .icon-close{
+            display:none;
+        }
+    </style>
+{% endif %}
+{% endblock content%}
