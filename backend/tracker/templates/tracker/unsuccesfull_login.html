@@ -5,24 +5,76 @@
 {% endblock %}
 
 {% block content %}
+<div class="outer-reset-div">
+    <div class="inner-reset-div">
+
 {% if forgot_password %}
 
-    <div class="outer-reset-div">
-        <div class="inner-reset-div">
-            <form action="{% url 'calo-res-pas' %}" method="POST">
-            {% csrf_token %}
-            <h2 class="header-text">Password Reset</h2>
-                <label for="email">
-                    Password Reset Link Will Be Sent To This Email 
-                    <input type="email" name="email" id="r_email"
-                    placeholder="Email Field">
-                </label>
-                <button type="submit" class="send_reset_email">
-                    Send A Reset Email
-                </button>
-            </form>
+    <form method="POST">
+    {% csrf_token %}
+    <h2 class="header-text">Password Reset</h2>
+        {% if errors %}
+        <h3 class="highlight">Invalid Email, Please Try Again</h3>
+        {% endif %}
+        <label for="email">
+            Password Reset Link Will Be Sent To This Email 
+            {{form.as_p}}
+        </label>
+        
+        <button type="submit" class="send_reset_email">
+            Send A Reset Email
+        </button>
+    </form>
+
+{% elif sent_password_reset %}
+
+    <h2 class="header-text">
+        Reset Instruction Has Been<br>
+        Sent To Your Email Address</h2>
+
+{% elif password_reset %}
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <h2 class="header-text">Change Password</h2>
+        <label for="password">
+            {{form.as_p}}
+        </label>
+        
+        <label>
+            <input type="checkbox" id="togglePassword">Reveal Password
+        </label>
+        <button type="submit" class="send_reset_email">
+            Change Password
+        </button>
+    </form>
+    <script>
+        // Show/hide password functionality
+        const passwordInput = document.getElementById('id_new_password1');
+        const repeatPasswordInput = document.getElementById('id_new_password2');
+        
+        function togglePasswordVisibility(inputElement) {
+            inputElement.type = inputElement.type === 'password' ? 'text' : 'password';
+        }
+        
+        document.getElementById('togglePassword').addEventListener('click', () => {
+            togglePasswordVisibility(passwordInput);
+            togglePasswordVisibility(repeatPasswordInput);
+        });
+    </script>
+    <style>
+        .inner-reset-div{
+            height: 65vh !important;
+        }
+    </style>
+
+{% elif password_reset_complete %}
+
+        <h2 class="header-text">
+            Your Password Has Been Changed 
+            <br> Please Log-In With New Credentials</h2>
         </div>
-    </div>
 
 {% else %}
     <!-- Handling Username Errors  -->
@@ -57,4 +109,6 @@
         }
     </style>
 {% endif %}
+    </div>
+</div>
 {% endblock content%}

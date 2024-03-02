@@ -87,6 +87,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'calorie_counter.wsgi.application'
 
 
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 

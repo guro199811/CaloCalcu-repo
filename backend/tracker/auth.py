@@ -1,7 +1,16 @@
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+# For Routing
 from django.shortcuts import render, redirect
+# For User Management
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
+# For Debugging
 import logging
+# For Sending Emails
+from django.core.mail import send_mail
+# Custom Token Generator
+from .tokens import generate_reset_link
+
+
 
 
 # Custom User Creation Form
@@ -72,19 +81,43 @@ def login_auth(request):
     return render(request, 'tracker/unsuccesfull_login.html', {'form': form})
 
 
-def reset_password(request):
-    if request.method == 'GET':
+from django.core.mail import send_mail
 
-        form = {
-            'forgot_password' : True
+def reset_password(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+
+        try:
+            user = User.objects.get(email=email)
+
+            reset_link = generate_reset_link(user)
+
+            subject = "Password Reset Instructions"
+            message = f"Click the link below to reset your password:\n{reset_link}"
+            from_email = "noreply@example.com" # Sender
+            recipient_list = [email]
+            variables = {
+                'email_sent' : True
+            }
+            
+            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+        except:
+            print("Invalid header found.")
+            variables = {
+                'email_send' : False,
+                'forgot_password' : True,
+                'errors' : True
+        }
+        return render(request, 'tracker/unsuccesfull_login.html', variables)
+    else:
+        variables = {
+            'forgot_password': True
         }
 
-        return render(request, 'tracker/unsuccesfull_login.html', form)
-    elif request.method == 'POST':
-        email = request.POST.get('email')
-        return render(request, 'tracker/unsuccesfull_login.html')
+        return render(request, 'tracker/unsuccesfull_login.html', variables)
 
-
+# def password_reset_confirm(request):
+#     pass
 
 def logout_auth(request):
     logout(request)

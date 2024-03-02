@@ -1122,7 +1122,7 @@ body {
  }
  
  /* Email */
- #r_email{
+ #id_email{
   margin-top:6px;
   width:20vw;
   height:4vh;
@@ -1166,3 +1166,57 @@ body {
 .title{
   margin-top: 15px;
 }
+
+
+.highlight{
+  font-size: 14px;
+  text-align: center;
+  width: 20vw;
+  height: auto;
+  background-color: rgba(255, 0, 0, 0.5);
+  color: rgb(255, 255, 255);
+  border-radius: 20px;
+}
+
+
+/* Password */
+#id_new_password1{
+  height:35px;
+  text-align:center;
+  border-style:none;
+  margin-bottom: 15px;
+  box-shadow:0px 0px 32px 1px #ffffff;
+  border-top-left-radius:144px;
+  border-top-right-radius:144px;
+  border-bottom-left-radius:19px;
+  border-bottom-right-radius:19px;
+ }
+ 
+ /* Password */
+ #id_new_password2{
+  height:35px;
+  text-align:center;
+  border-style:none;
+  box-shadow:0px 0px 32px 1px #ffffff;
+  border-bottom-left-radius:144px;
+  border-bottom-right-radius:144px;
+  border-top-left-radius:19px;
+  border-top-right-radius:19px;
+ }
+ 
+.inner-reset-div ul{
+  margin: 0;
+
+}
+
+
+ /* Label */
+ .outer-reset-div form label{
+  text-align:center;
+ }
+ 
+ /* Send reset email */
+ .content .outer-reset-div .inner-reset-div form .send_reset_email{
+  height:auto !important;
+ }
+ 
