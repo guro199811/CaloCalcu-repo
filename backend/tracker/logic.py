@@ -1,5 +1,6 @@
 import json
 
+from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt  # For demonstration (remove in production)
 from django.contrib.auth.decorators import login_required
@@ -9,6 +10,8 @@ from .models import *
 from django.db.models import Q  # For advanced filtering
 from collections import Counter
 from django.http import JsonResponse, HttpResponseNotFound
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 
@@ -123,3 +126,34 @@ def remove_food_entry(request):
 
     else:
         return HttpResponseNotFound('Method not allowed')
+    
+
+
+# Contact Logic
+    
+def contact_us(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        message = request.POST.get('textfield')
+
+        print(email, subject, message)
+
+
+        # NOTE FOR FUTURE ME:
+        # Contact Page Wont work with filebased system
+        # configure settings.py with smtp mailing system
+        # it should work then, but youll figure it out.
+
+
+        # Send an email
+        send_mail(
+            subject,
+            message,
+            email,  # User's email as the sender
+            [settings.EMAIL_HOST_USER],  # Host's email as the recipient
+            fail_silently=False,
+        )
+
+        variables = {'contact_sent': True}
+        return render(request, 'tracker/contact.html', variables)

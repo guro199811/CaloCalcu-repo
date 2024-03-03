@@ -1122,7 +1122,7 @@ body {
  }
  
  /* Email */
- #r_email{
+ #id_email{
   margin-top:6px;
   width:20vw;
   height:4vh;
@@ -1180,10 +1180,11 @@ body {
 
 
 /* Password */
-#r_password{
+#id_new_password1{
   height:35px;
   text-align:center;
   border-style:none;
+  margin-bottom: 15px;
   box-shadow:0px 0px 32px 1px #ffffff;
   border-top-left-radius:144px;
   border-top-right-radius:144px;
@@ -1192,7 +1193,7 @@ body {
  }
  
  /* Password */
- #re_password{
+ #id_new_password2{
   height:35px;
   text-align:center;
   border-style:none;
@@ -1203,6 +1204,12 @@ body {
   border-top-right-radius:19px;
  }
  
+.inner-reset-div ul{
+  margin: 0;
+
+}
+
+
  /* Label */
  .outer-reset-div form label{
   text-align:center;
@@ -1212,4 +1219,96 @@ body {
  .content .outer-reset-div .inner-reset-div form .send_reset_email{
   height:auto !important;
  }
- 
+
+
+/* Contact Page CSS - Imaginative Theme */
+.black-bg-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: 6000;
+  background: linear-gradient(135deg,  #27216a 0%,  #000000 100%);
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(10px);
+}
+
+.contact-div {
+  background-color: #ffffffdd; /* Semi-transparent white with a hint of opacity */
+  padding: 3rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  width: calc(100% - 4rem);
+  top: 90px;
+  left: 0;
+  margin: auto;
+  transform: translateY(-50px); /* Slightly raised above the center */
+  transition: transform 0.3s ease;
+}
+
+.contact-div:hover {
+  transform: translateY(-40px); /* Gentle hover effect */
+}
+
+/* Form Styling */
+.contact-div form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Input and Textarea Styling */
+.contact-div form input,
+.contact-div form textarea {
+  padding: 1rem;
+  border-radius: 8px;
+  border: 2px solid #667eea; /* Themed border color */
+  background-color: #f7f7f7;
+  transition: border-color 0.3s ease;
+}
+
+.contact-div form input:focus,
+.contact-div form textarea:focus {
+  outline: none;
+  border-color: #764ba2; /* Focus color change for interaction feedback */
+}
+
+/* Textarea for message field */
+.contact-div textarea{
+  height: 200px; /* More space for messages */
+  resize: none; /* Disable resizing for a cleaner look */
+}
+
+/* Button Styling */
+.contact-div form button#contact-submit {
+  padding: 1rem;
+  background-color: #667eea; /* Themed button color */
+  color: white;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-div form button#contact-submit:hover {
+  background-color: #5a67d8; /* Darken button on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-div {
+    width: calc(100% - 2rem);
+    padding: 2rem;
+  }
+}
+

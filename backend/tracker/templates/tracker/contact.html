@@ -5,4 +5,33 @@
 {% endblock %}
 
 {% block content %}
+
+<div class="black-bg-div">
+    <div class="contact-div blockbox">
+        {% if contact_sent %}
+            <h2 class="header-text">
+                Your Messege Has Been Sent
+            <br> Thank You For Your Interest &#x2764;</h2>
+            </div>
+        {% else %}
+            <form action="{% url 'calo-contact-us' %}" method="POST">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+                <label for="Email">
+                Your Email
+                <input type="email" name="email" value="{{ user.email }}" readonly>
+                </label>
+            {% else %}
+                <label for="Email">
+                Input Your Email
+                <input type="email" placeholder="Email" name="email" required>
+                </label>
+            {% endif %}
+                <input type="text" name="subject" placeholder="subject" required>
+                <textarea type="textfield" name="textfield" placeholder="What Do You Want To Tell Us?" required></textarea>
+                <button type="submit" id="contact-submit">Send</button>
+            </form>
+        {% endif %}
+    </div>
+</div>
 {% endblock content%}

@@ -20,7 +20,6 @@ urlpatterns = [
     path('login/', auth.login_auth, name='calo-login'),
     path('register/', auth.register_auth, name='calo-register'),
     path('login-error/', auth.login, name='calo-login-error'),
-    # path('reset-password/', auth.reset_password, name='calo-res-pas'),
 
     path('reset_password/', PasswordResetView.as_view(
         template_name='tracker/unsuccesfull_login.html',
@@ -45,7 +44,8 @@ urlpatterns = [
     path('logout/', auth.logout_auth, name='calo-logout'),
     path('add-food-history/', logic.add_food_history, name='add_food_history'),
     path('retrieve-food-history/', logic.retrieve_food_history, name='retieve_food_history'),
-    path('remove-food-entry/', logic.remove_food_entry, name='remove_food_entry')
+    path('remove-food-entry/', logic.remove_food_entry, name='remove_food_entry'),
+    path('send_contact/', logic.contact_us, name='calo-contact-us')
 ]
 
 if settings.DEBUG:

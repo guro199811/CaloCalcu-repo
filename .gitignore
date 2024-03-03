@@ -3,4 +3,4 @@
 *.pub
 ssh_keys
 venv
-backend/sent_emails
+backend/sent_emails/*
